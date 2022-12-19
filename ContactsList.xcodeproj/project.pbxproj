@@ -394,6 +394,7 @@
 				DEVELOPMENT_TEAM = G4T7QK2U75;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ContactsList/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Contacts;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -422,6 +423,7 @@
 				DEVELOPMENT_TEAM = G4T7QK2U75;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ContactsList/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Contacts;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
