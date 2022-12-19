@@ -44,6 +44,8 @@ final class ContactsViewController: UIViewController {
     }
 
     @objc private func loadContacts() {
-        print("test")
+        let data = PhoneContacts().getContacts()
+        print(data.count)
+        loadContactsButton.isHidden = true
     }
 }

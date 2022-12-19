@@ -11,6 +11,7 @@
 		E99B4F052950F4E000DB74B8 /* UITabBarController+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99B4F042950F4E000DB74B8 /* UITabBarController+Ex.swift */; };
 		E99B4F072950FEAE00DB74B8 /* UIButton+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99B4F062950FEAE00DB74B8 /* UIButton+Ex.swift */; };
 		E99B4F0A29510BAD00DB74B8 /* PhoneContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99B4F0929510BAD00DB74B8 /* PhoneContactModel.swift */; };
+		E99B4F0D29510DF700DB74B8 /* PhoneContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99B4F0C29510DF700DB74B8 /* PhoneContacts.swift */; };
 		E9A4DC832950C90100725A63 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4DC822950C90100725A63 /* TabBarViewController.swift */; };
 		E9A4DC852950D2F800725A63 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A4DC842950D2F800725A63 /* Colors.xcassets */; };
 		E9A4DC872950D71A00725A63 /* FavouriteContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4DC862950D71A00725A63 /* FavouriteContactsViewController.swift */; };
@@ -28,6 +29,7 @@
 		E99B4F042950F4E000DB74B8 /* UITabBarController+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Ex.swift"; sourceTree = "<group>"; };
 		E99B4F062950FEAE00DB74B8 /* UIButton+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ex.swift"; sourceTree = "<group>"; };
 		E99B4F0929510BAD00DB74B8 /* PhoneContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContactModel.swift; sourceTree = "<group>"; };
+		E99B4F0C29510DF700DB74B8 /* PhoneContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContacts.swift; sourceTree = "<group>"; };
 		E9A4DC822950C90100725A63 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E9A4DC842950D2F800725A63 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E9A4DC862950D71A00725A63 /* FavouriteContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteContactsViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		E99B4F0B29510DE300DB74B8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E99B4F0C29510DF700DB74B8 /* PhoneContacts.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		E9A4DC882950DBDE00725A63 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +125,7 @@
 		E9B11F62295073280002CFA6 /* ContactsList */ = {
 			isa = PBXGroup;
 			children = (
+				E99B4F0B29510DE300DB74B8 /* Services */,
 				E99B4F0829510B9900DB74B8 /* Model */,
 				E9B11F7829507D8A0002CFA6 /* Applications */,
 				E9B11F7929507D990002CFA6 /* ViewController */,
@@ -304,6 +315,7 @@
 				E99B4F072950FEAE00DB74B8 /* UIButton+Ex.swift in Sources */,
 				E9A4DC872950D71A00725A63 /* FavouriteContactsViewController.swift in Sources */,
 				E99B4F0A29510BAD00DB74B8 /* PhoneContactModel.swift in Sources */,
+				E99B4F0D29510DF700DB74B8 /* PhoneContacts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +459,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ContactsList/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Contacts;
+				INFOPLIST_KEY_NSContactsUsageDescription = "Allow Contact Access";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -476,6 +489,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ContactsList/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Contacts;
+				INFOPLIST_KEY_NSContactsUsageDescription = "Allow Contact Access";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

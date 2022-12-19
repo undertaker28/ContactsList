@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Contacts Usage Description</key>
+	<string>Allow Contact Access</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>WorkSans-Regular.otf</string>
