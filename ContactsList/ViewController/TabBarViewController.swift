@@ -17,8 +17,8 @@ final class TabBarViewController: UITabBarController {
     func setupTabBar() {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1.0)
-        UITabBar.appearance().tintColor = UIColor(named: "TabBarItemColor")
+        tabBarAppearance.backgroundColor = UIColor(named: "TabBarBackgroundColor")
+        UITabBar.appearance().tintColor = UIColor(named: "UIElementsColor")
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
