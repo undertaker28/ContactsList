@@ -7,6 +7,5 @@ target 'ContactsList' do
 
   # Pods for ContactsList
   pod 'SnapKit'
-  pod 'RAMAnimatedTabBarController'
 
 end

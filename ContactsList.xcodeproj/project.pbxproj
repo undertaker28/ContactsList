@@ -92,9 +92,9 @@
 		E9B11F62295073280002CFA6 /* ContactsList */ = {
 			isa = PBXGroup;
 			children = (
-				E9A4DC882950DBDE00725A63 /* Fonts */,
 				E9B11F7829507D8A0002CFA6 /* Applications */,
 				E9B11F7929507D990002CFA6 /* ViewController */,
+				E9A4DC882950DBDE00725A63 /* Fonts */,
 				E9B11F7729507D7F0002CFA6 /* SupportingFiles */,
 			);
 			path = ContactsList;
