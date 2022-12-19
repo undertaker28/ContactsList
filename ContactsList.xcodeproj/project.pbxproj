@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3CC82D1499F754FF8A2042B3 /* Pods_ContactsList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD14B4DDA98742FE5A45C76 /* Pods_ContactsList.framework */; };
+		E99B4F052950F4E000DB74B8 /* UITabBarController+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99B4F042950F4E000DB74B8 /* UITabBarController+Ex.swift */; };
 		E9A4DC832950C90100725A63 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4DC822950C90100725A63 /* TabBarViewController.swift */; };
 		E9A4DC852950D2F800725A63 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A4DC842950D2F800725A63 /* Colors.xcassets */; };
 		E9A4DC872950D71A00725A63 /* FavouriteContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4DC862950D71A00725A63 /* FavouriteContactsViewController.swift */; };
@@ -22,6 +23,7 @@
 		07C4F404ECB64BE02C9C394A /* Pods-ContactsList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContactsList.release.xcconfig"; path = "Target Support Files/Pods-ContactsList/Pods-ContactsList.release.xcconfig"; sourceTree = "<group>"; };
 		5CD14B4DDA98742FE5A45C76 /* Pods_ContactsList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ContactsList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB12C9742497E0912EC4F95E /* Pods-ContactsList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContactsList.debug.xcconfig"; path = "Target Support Files/Pods-ContactsList/Pods-ContactsList.debug.xcconfig"; sourceTree = "<group>"; };
+		E99B4F042950F4E000DB74B8 /* UITabBarController+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Ex.swift"; sourceTree = "<group>"; };
 		E9A4DC822950C90100725A63 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E9A4DC842950D2F800725A63 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E9A4DC862950D71A00725A63 /* FavouriteContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteContactsViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E99B4F032950F4A900DB74B8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E99B4F042950F4E000DB74B8 /* UITabBarController+Ex.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E9A4DC882950DBDE00725A63 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +104,7 @@
 			children = (
 				E9B11F7829507D8A0002CFA6 /* Applications */,
 				E9B11F7929507D990002CFA6 /* ViewController */,
+				E99B4F032950F4A900DB74B8 /* Extensions */,
 				E9A4DC882950DBDE00725A63 /* Fonts */,
 				E9B11F7729507D7F0002CFA6 /* SupportingFiles */,
 			);
@@ -272,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E99B4F052950F4E000DB74B8 /* UITabBarController+Ex.swift in Sources */,
 				E9B11F68295073280002CFA6 /* ContactsViewController.swift in Sources */,
 				E9A4DC832950C90100725A63 /* TabBarViewController.swift in Sources */,
 				E9B11F64295073280002CFA6 /* AppDelegate.swift in Sources */,

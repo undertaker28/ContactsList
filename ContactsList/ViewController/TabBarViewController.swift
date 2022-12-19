@@ -5,31 +5,33 @@
 //  Created by Pavel on 19.12.22.
 //
 
+import UIKit
+
 final class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        UITabBar.appearance().tintColor = UIColor.red
+        setupTabBar()
         configure()
     }
 
-    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        guard let barItemView = item.value(forKey: "view") as? UIView else { return }
-
-        let timeInterval: TimeInterval = 0.3
-        let propertyAnimator = UIViewPropertyAnimator(duration: timeInterval, dampingRatio: 0.5) {
-            barItemView.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
-        }
-        propertyAnimator.addAnimations({ barItemView.transform = .identity }, delayFactor: CGFloat(timeInterval))
-        propertyAnimator.startAnimation()
+    func setupTabBar() {
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1.0)
+        UITabBar.appearance().tintColor = UIColor(named: "TabBarItemColor")
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
-    
+
     func configure() {
         let contactsViewController = ContactsViewController()
         let favouriteContactsViewController = FavouriteContactsViewController()
 
         contactsViewController.tabBarItem = UITabBarItem(title: "Contacts", image: UIImage(systemName: "person.2.circle"), tag: 1)
+        contactsViewController.tabBarItem.selectedImage = UIImage(systemName: "person.2.circle.fill")
 
         favouriteContactsViewController.tabBarItem = UITabBarItem(title: "Favourite", image: UIImage(systemName: "heart"), tag: 2)
+        favouriteContactsViewController.tabBarItem.selectedImage = UIImage(systemName: "heart.fill")
 
         setViewControllers([contactsViewController, favouriteContactsViewController], animated: false)
     }
