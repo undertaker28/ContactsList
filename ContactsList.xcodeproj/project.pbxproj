@@ -11,6 +11,7 @@
 		E9A4DC832950C90100725A63 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4DC822950C90100725A63 /* TabBarViewController.swift */; };
 		E9A4DC852950D2F800725A63 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A4DC842950D2F800725A63 /* Colors.xcassets */; };
 		E9A4DC872950D71A00725A63 /* FavouriteContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4DC862950D71A00725A63 /* FavouriteContactsViewController.swift */; };
+		E9A4DC8A2950DBE900725A63 /* WorkSans-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E9A4DC892950DBE900725A63 /* WorkSans-Regular.otf */; };
 		E9B11F64295073280002CFA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B11F63295073280002CFA6 /* AppDelegate.swift */; };
 		E9B11F68295073280002CFA6 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B11F67295073280002CFA6 /* ContactsViewController.swift */; };
 		E9B11F6D295073290002CFA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9B11F6C295073290002CFA6 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 		E9A4DC822950C90100725A63 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E9A4DC842950D2F800725A63 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E9A4DC862950D71A00725A63 /* FavouriteContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteContactsViewController.swift; sourceTree = "<group>"; };
+		E9A4DC892950DBE900725A63 /* WorkSans-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WorkSans-Regular.otf"; sourceTree = "<group>"; };
 		E9B11F60295073280002CFA6 /* ContactsList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9B11F63295073280002CFA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9B11F67295073280002CFA6 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +63,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E9A4DC882950DBDE00725A63 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E9A4DC892950DBE900725A63 /* WorkSans-Regular.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		E9B11F57295073280002CFA6 = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +92,7 @@
 		E9B11F62295073280002CFA6 /* ContactsList */ = {
 			isa = PBXGroup;
 			children = (
+				E9A4DC882950DBDE00725A63 /* Fonts */,
 				E9B11F7829507D8A0002CFA6 /* Applications */,
 				E9B11F7929507D990002CFA6 /* ViewController */,
 				E9B11F7729507D7F0002CFA6 /* SupportingFiles */,
@@ -189,6 +200,7 @@
 			files = (
 				E9A4DC852950D2F800725A63 /* Colors.xcassets in Resources */,
 				E9B11F70295073290002CFA6 /* LaunchScreen.storyboard in Resources */,
+				E9A4DC8A2950DBE900725A63 /* WorkSans-Regular.otf in Resources */,
 				E9B11F6D295073290002CFA6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

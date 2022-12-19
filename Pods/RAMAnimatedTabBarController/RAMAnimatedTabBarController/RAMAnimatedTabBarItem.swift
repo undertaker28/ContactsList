@@ -38,7 +38,7 @@ open class RAMAnimatedTabBarItem: UITabBarItem {
     @IBOutlet open var animation: RAMItemAnimation!
 
     /// The font used to render the UITabBarItem text.
-    @IBInspectable open var textFontSize: CGFloat = 11
+    @IBInspectable open var textFontSize: CGFloat = 12
 
     /// The color of the UITabBarItem text.
     @IBInspectable open var textColor: UIColor = #colorLiteral(red: 0.5079551811, green: 0.5472556715, blue: 0.6011400746, alpha: 1)
