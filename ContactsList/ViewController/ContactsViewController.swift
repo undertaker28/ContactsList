@@ -10,7 +10,7 @@ import SnapKit
 
 final class ContactsViewController: UIViewController {
     var favouriteContacts = [PhoneContact]()
-    
+
     private lazy var loadContactsButton: UIButton = {
         let button = UIButton()
         button.setTitle("Загрузить контакты", for: .normal)
@@ -99,6 +99,7 @@ final class ContactsViewController: UIViewController {
             defaults.set(encoded, forKey: "favouriteContacts")
         }
         phoneContacts[indexPathTapped.row].isFavourite = isFavourite
+        Storage.store(phoneContacts, to: .documents, as: "messages.json")
     }
 
     var phoneContacts = [PhoneContact]() {
