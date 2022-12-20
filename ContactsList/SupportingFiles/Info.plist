@@ -6,6 +6,7 @@
 	<string>Allow Contact Access</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>MarkPro-Bold.otf</string>
 		<string>WorkSans-Regular.otf</string>
 	</array>
 </dict>

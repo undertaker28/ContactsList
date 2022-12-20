@@ -20,7 +20,7 @@ final class PhoneContacts {
             CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
             CNContactPhoneNumbersKey,
             CNContactEmailAddressesKey,
-            CNContactThumbnailImageDataKey] as [Any]
+            CNContactImageDataKey, CNContactImageDataAvailableKey] as [Any]
 
         var allContainers: [CNContainer] = []
         do {

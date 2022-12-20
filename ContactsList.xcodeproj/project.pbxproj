@@ -20,6 +20,8 @@
 		E9B11F68295073280002CFA6 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B11F67295073280002CFA6 /* ContactsViewController.swift */; };
 		E9B11F6D295073290002CFA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9B11F6C295073290002CFA6 /* Assets.xcassets */; };
 		E9B11F70295073290002CFA6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9B11F6E295073290002CFA6 /* LaunchScreen.storyboard */; };
+		E9DA80722951D763005AABF6 /* ContactsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA80712951D763005AABF6 /* ContactsTableCell.swift */; };
+		E9DA807629521737005AABF6 /* MarkPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E9DA807529521737005AABF6 /* MarkPro-Bold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		E9B11F6C295073290002CFA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9B11F6F295073290002CFA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9B11F71295073290002CFA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9DA80712951D763005AABF6 /* ContactsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableCell.swift; sourceTree = "<group>"; };
+		E9DA807529521737005AABF6 /* MarkPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MarkPro-Bold.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 		E9A4DC882950DBDE00725A63 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E9DA807529521737005AABF6 /* MarkPro-Bold.otf */,
 				E9A4DC892950DBE900725A63 /* WorkSans-Regular.otf */,
 			);
 			path = Fonts;
@@ -157,6 +162,7 @@
 		E9B11F7929507D990002CFA6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E9DA80702951D75A005AABF6 /* Cell */,
 				E9A4DC822950C90100725A63 /* TabBarViewController.swift */,
 				E9B11F67295073280002CFA6 /* ContactsViewController.swift */,
 				E9A4DC862950D71A00725A63 /* FavouriteContactsViewController.swift */,
@@ -171,6 +177,14 @@
 				E9A4DC842950D2F800725A63 /* Colors.xcassets */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		E9DA80702951D75A005AABF6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E9DA80712951D763005AABF6 /* ContactsTableCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +252,7 @@
 				E9B11F70295073290002CFA6 /* LaunchScreen.storyboard in Resources */,
 				E9A4DC8A2950DBE900725A63 /* WorkSans-Regular.otf in Resources */,
 				E9B11F6D295073290002CFA6 /* Assets.xcassets in Resources */,
+				E9DA807629521737005AABF6 /* MarkPro-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +327,7 @@
 				E9B11F68295073280002CFA6 /* ContactsViewController.swift in Sources */,
 				E9A4DC832950C90100725A63 /* TabBarViewController.swift in Sources */,
 				E9B11F64295073280002CFA6 /* AppDelegate.swift in Sources */,
+				E9DA80722951D763005AABF6 /* ContactsTableCell.swift in Sources */,
 				E99B4F072950FEAE00DB74B8 /* UIButton+Ex.swift in Sources */,
 				E9A4DC872950D71A00725A63 /* FavouriteContactsViewController.swift in Sources */,
 				E99B4F0A29510BAD00DB74B8 /* PhoneContactModel.swift in Sources */,

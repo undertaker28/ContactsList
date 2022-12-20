@@ -7,17 +7,20 @@
 
 import ContactsUI
 
-class PhoneContact: Codable {
+struct PhoneContact: Codable {
     var name: String?
     var avatarData: Data?
+    var imageDataAvailable: Bool
     var phoneNumber: [String] = [String]()
     var email: [String] = [String]()
     var isSelected: Bool = false
     var isInvited = false
+    var isFavourite = false
 
     init(contact: CNContact) {
         name = contact.givenName + " " + contact.familyName
-        avatarData = contact.thumbnailImageData
+        avatarData = contact.imageData
+        imageDataAvailable = contact.imageDataAvailable
         for phone in contact.phoneNumbers {
             phoneNumber.append(phone.value.stringValue)
         }
