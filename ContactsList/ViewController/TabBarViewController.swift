@@ -25,7 +25,7 @@ final class TabBarViewController: UITabBarController {
 
     func configure() {
         let contactsViewController = UINavigationController(rootViewController: ContactsViewController())
-        let favouriteContactsViewController = FavouriteContactsViewController()
+        let favouriteContactsViewController = UINavigationController(rootViewController: FavouriteContactsViewController())
 
         contactsViewController.tabBarItem = UITabBarItem(title: "Contacts", image: UIImage(systemName: "person.2.circle"), tag: 1)
         contactsViewController.tabBarItem.selectedImage = UIImage(systemName: "person.2.circle.fill")

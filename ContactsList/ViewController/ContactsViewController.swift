@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class ContactsViewController: UIViewController {
+    var favouriteContacts = [PhoneContact]()
+    
     private lazy var loadContactsButton: UIButton = {
         let button = UIButton()
         button.setTitle("Загрузить контакты", for: .normal)
@@ -78,9 +80,25 @@ final class ContactsViewController: UIViewController {
             return
         }
         let contact = phoneContacts[indexPathTapped.row]
-        print(contact)
-        let isFavourite = contact.isFavourite
-        phoneContacts[indexPathTapped.row].isFavourite = !isFavourite
+        //print(contact)
+        let isFavourite = !contact.isFavourite
+        if isFavourite {
+            favouriteContacts.append(contact)
+            print(favouriteContacts.count)
+        } else {
+            for (index, favouriteContact) in favouriteContacts.enumerated() {
+                if favouriteContact.phoneNumber == contact.phoneNumber {
+                    favouriteContacts.remove(at: index)
+                    break
+                }
+            }
+        }
+
+        if let encoded = try? PropertyListEncoder().encode(favouriteContacts) {
+            let defaults = UserDefaults.standard
+            defaults.set(encoded, forKey: "favouriteContacts")
+        }
+        phoneContacts[indexPathTapped.row].isFavourite = isFavourite
     }
 
     var phoneContacts = [PhoneContact]() {
