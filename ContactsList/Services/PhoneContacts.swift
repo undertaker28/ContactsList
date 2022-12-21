@@ -13,8 +13,13 @@ enum ContactsFilter {
     case message
 }
 
+enum GetContactsError: Error {
+    case errorFetchingContainers
+    case errorInGettingKeyDescriptor
+}
+
 final class PhoneContacts {
-    func getContacts(filter: ContactsFilter = .none) -> [CNContact] {
+    func getContacts(filter: ContactsFilter = .none) throws -> [CNContact] {
         let contactStore = CNContactStore()
         let keysToFetch = [
             CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
@@ -26,7 +31,7 @@ final class PhoneContacts {
         do {
             allContainers = try contactStore.containers(matching: nil)
         } catch {
-            print("Error fetching containers")
+            throw GetContactsError.errorFetchingContainers
         }
 
         var results: [CNContact] = []
@@ -36,12 +41,12 @@ final class PhoneContacts {
 
             do {
                 guard let keysToFetch = keysToFetch as? [CNKeyDescriptor] else {
-                    fatalError("Couldn't get key descriptor")
+                    throw GetContactsError.errorInGettingKeyDescriptor
                 }
                 let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch)
                 results.append(contentsOf: containerResults)
             } catch {
-                print("Error fetching containers")
+                throw GetContactsError.errorFetchingContainers
             }
         }
         return results

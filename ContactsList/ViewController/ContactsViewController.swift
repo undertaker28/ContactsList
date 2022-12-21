@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class ContactsViewController: UIViewController {
-    var phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self) {
+    private var phoneContacts = Storage.fileExists("contacts.json", in: .documents) ? Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self) : [PhoneContact]() {
         didSet {
             if !phoneContacts.isEmpty {
                 tableView.isHidden = false
@@ -19,8 +19,9 @@ final class ContactsViewController: UIViewController {
             }
         }
     }
-    var favouriteContacts = [PhoneContact]()
-    var filter: ContactsFilter = .none
+
+    private var favouriteContacts = [PhoneContact]()
+    private var filter: ContactsFilter = .none
 
     private lazy var loadContactsButton: UIButton = {
         let button = UIButton()
@@ -59,13 +60,23 @@ final class ContactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "BackgroundColor")
-        view.addSubview(tableView)
-        view.addSubview(loadContactsButton)
+        addSubviews()
         loadContactsButton.isHidden = phoneContacts.isEmpty ? false : true
-        //        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
-        //        Storage.store(phoneContacts, to: .documents, as: "favouriteContacts.json")
+        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
         setupNavigationBar()
         makeConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+
+    private func addSubviews() {
+        view.addSubview(tableView)
+        view.addSubview(loadContactsButton)
     }
 
     private func makeConstraints() {
@@ -87,46 +98,87 @@ final class ContactsViewController: UIViewController {
 
     @objc private func loadContacts() {
         loadContactsFromPhone(filter: filter)
-        loadContactsButton.isHidden = true
         tableView.isHidden = false
+    }
+
+    private func loadContactsFromPhone(filter: ContactsFilter) {
+        phoneContacts.removeAll()
+        var allContacts = [PhoneContact]()
+        do {
+            let gettingContacts = try PhoneContacts().getContacts(filter: filter)
+            for contact in gettingContacts {
+                allContacts.append(PhoneContact(contact: contact))
+            }
+            loadContactsButton.isHidden = true
+        } catch {
+            settingsAlert()
+        }
+        phoneContacts.append(contentsOf: allContacts)
+
+        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+
+    private func settingsAlert() {
+        let alertController = UIAlertController(title: "No access to the contacs", message: "Please provide access to the contacts", preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl)
+            }
+        }
+        alertController.addAction(settingsAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
     }
 
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             let touchPoint = sender.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
-                let alert = UIAlertController(title: phoneContacts[indexPath.row].name, message: "Please select an option", preferredStyle: .alert)
-
-                let copyActionButton = UIAlertAction(title: "Copy", style: .default) { [self] _ in
-                    copyPhoneNumber(index: indexPath.row)
-                }
-                alert.addAction(copyActionButton)
-                copyActionButton.setValue(UIImage(systemName: "doc.on.doc"), forKey: "image")
-                copyActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-                let shareActionButton = UIAlertAction(title: "Share", style: .default) { [self]_ in
-                    shareWithPhoneNumber(index: indexPath.row)
-                }
-                alert.addAction(shareActionButton)
-                shareActionButton.setValue(UIImage(systemName: "square.and.arrow.up"), forKey: "image")
-                shareActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-                let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                alert.addAction(cancelActionButton)
-                cancelActionButton.setValue(UIImage(systemName: "arrowshape.turn.up.backward"), forKey: "image")
-                cancelActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-                let deleteActionButton = UIAlertAction(title: "Delete", style: .destructive) { [self]_ in
-                    removeContact(indexPath: indexPath)
-                }
-                alert.addAction(deleteActionButton)
-                deleteActionButton.setValue(UIImage(systemName: "trash"), forKey: "image")
-                deleteActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-                alert.view.tintColor = UIColor(named: "TextColor")
-                self.present(alert, animated: true, completion: nil)
+                whenLongPressOnContactAlert(indexPath: indexPath)
             }
         }
+    }
+
+    private func whenLongPressOnContactAlert(indexPath: IndexPath) {
+        let alert = UIAlertController(title: phoneContacts[indexPath.row].name, message: "Please select an option", preferredStyle: .alert)
+
+        let copyActionButton = UIAlertAction(title: "Copy", style: .default) { [self] _ in
+            copyPhoneNumber(index: indexPath.row)
+        }
+        alert.addAction(copyActionButton)
+        copyActionButton.setValue(UIImage(systemName: "doc.on.doc"), forKey: "image")
+        copyActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+        let shareActionButton = UIAlertAction(title: "Share", style: .default) { [self]_ in
+            shareWithPhoneNumber(index: indexPath.row)
+        }
+        alert.addAction(shareActionButton)
+        shareActionButton.setValue(UIImage(systemName: "square.and.arrow.up"), forKey: "image")
+        shareActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelActionButton)
+        cancelActionButton.setValue(UIImage(systemName: "arrowshape.turn.up.backward"), forKey: "image")
+        cancelActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+        let deleteActionButton = UIAlertAction(title: "Delete", style: .destructive) { [self]_ in
+            removeContact(indexPath: indexPath)
+        }
+        alert.addAction(deleteActionButton)
+        deleteActionButton.setValue(UIImage(systemName: "trash"), forKey: "image")
+        deleteActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+        alert.view.tintColor = UIColor(named: "TextColor")
+        self.present(alert, animated: true, completion: nil)
     }
 
     private func copyPhoneNumber(index: Int) {
@@ -167,27 +219,6 @@ final class ContactsViewController: UIViewController {
         Storage.store(phoneContacts, to: .documents, as: "contacts.json")
         Storage.store(favouriteContacts, to: .documents, as: "favouriteContacts.json")
     }
-
-    private func loadContactsFromPhone(filter: ContactsFilter) {
-        phoneContacts.removeAll()
-        var allContacts = [PhoneContact]()
-        for contact in PhoneContacts().getContacts(filter: filter) {
-            allContacts.append(PhoneContact(contact: contact))
-        }
-        phoneContacts.append(contentsOf: allContacts)
-
-        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
 }
 
 extension ContactsViewController: UITableViewDelegate {
@@ -216,7 +247,7 @@ extension ContactsViewController: UITableViewDataSource {
         cell.heartButton.isSelected = phoneContacts[indexPath.row].isFavourite
         if phoneContacts[indexPath.row].imageDataAvailable {
             guard let data = phoneContacts[indexPath.row].avatarData else {
-                fatalError("Error")
+                fatalError("Couldn't get avatarData")
             }
             cell.cellProfileImageView.image = UIImage(data: data)
         } else {

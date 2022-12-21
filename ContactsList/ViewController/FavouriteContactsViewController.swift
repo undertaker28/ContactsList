@@ -25,8 +25,16 @@ final class FavouriteContactsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "BackgroundColor")
         view.addSubview(tableView)
+        Storage.store(favouriteContacts, to: .documents, as: "favouriteContacts.json")
         setupNavigationBar()
         makeConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        favouriteContacts = Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     private func makeConstraints() {
@@ -47,7 +55,7 @@ final class FavouriteContactsViewController: UIViewController {
         var phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self)
         let contact = favouriteContacts[indexPathTapped.row]
         let isFavourite = contact.isFavourite
-        for (index, favouriteContact) in phoneContacts.enumerated() where favouriteContact.phoneNumber == contact.phoneNumber  {
+        for (index, favouriteContact) in phoneContacts.enumerated() where favouriteContact.phoneNumber == contact.phoneNumber {
             phoneContacts[index].isFavourite = isFavourite
         }
         Storage.store(phoneContacts, to: .documents, as: "contacts.json")
@@ -58,9 +66,9 @@ final class FavouriteContactsViewController: UIViewController {
         }
     }
 
-    lazy var favouriteContacts = Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self)
+    private lazy var favouriteContacts = Storage.fileExists("favouriteContacts.json", in: .documents) ? Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self) : [PhoneContact]()
 
-    func getContacts() -> [PhoneContact] {
+    private func getContacts() -> [PhoneContact] {
         var favouriteContactsFromStorage = [PhoneContact]()
         if let data = UserDefaults.standard.object(forKey: "favouriteContacts") as? Data {
             if let favouriteContacts = try? PropertyListDecoder().decode([PhoneContact].self, from: data) {
@@ -68,13 +76,6 @@ final class FavouriteContactsViewController: UIViewController {
             }
         }
         return favouriteContactsFromStorage
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        favouriteContacts = Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
     }
 }
 
@@ -104,7 +105,7 @@ extension FavouriteContactsViewController: UITableViewDataSource {
         cell.heartButton.isSelected = true
         if favouriteContacts[indexPath.row].imageDataAvailable {
             guard let data = favouriteContacts[indexPath.row].avatarData else {
-                fatalError("Error")
+                fatalError("Couldn't get avatarData")
             }
             cell.cellProfileImageView.image = UIImage(data: data)
         } else {
