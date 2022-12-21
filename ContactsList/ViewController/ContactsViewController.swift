@@ -9,7 +9,18 @@ import UIKit
 import SnapKit
 
 final class ContactsViewController: UIViewController {
+    var phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self) {
+        didSet {
+            if !phoneContacts.isEmpty {
+                tableView.isHidden = false
+            } else {
+                tableView.isHidden = true
+                loadContactsButton.isHidden = false
+            }
+        }
+    }
     var favouriteContacts = [PhoneContact]()
+    var filter: ContactsFilter = .none
 
     private lazy var loadContactsButton: UIButton = {
         let button = UIButton()
@@ -31,7 +42,7 @@ final class ContactsViewController: UIViewController {
     }()
 
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ContactsTableCell.self, forCellReuseIdentifier: "contactsTableCell")
@@ -48,6 +59,9 @@ final class ContactsViewController: UIViewController {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         view.addSubview(tableView)
         view.addSubview(loadContactsButton)
+        loadContactsButton.isHidden = phoneContacts.isEmpty ? false : true
+        //        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
+        //        Storage.store(phoneContacts, to: .documents, as: "favouriteContacts.json")
         setupNavigationBar()
         makeConstraints()
     }
@@ -70,7 +84,7 @@ final class ContactsViewController: UIViewController {
     }
 
     @objc private func loadContacts() {
-        loadContacts1(filter: filter)
+        loadContactsFromPhone(filter: filter)
         loadContactsButton.isHidden = true
         tableView.isHidden = false
     }
@@ -80,41 +94,21 @@ final class ContactsViewController: UIViewController {
             return
         }
         let contact = phoneContacts[indexPathTapped.row]
-        //print(contact)
         let isFavourite = !contact.isFavourite
+        var favouriteContacts = Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self)
         if isFavourite {
             favouriteContacts.append(contact)
-            print(favouriteContacts.count)
         } else {
-            for (index, favouriteContact) in favouriteContacts.enumerated() {
-                if favouriteContact.phoneNumber == contact.phoneNumber {
-                    favouriteContacts.remove(at: index)
-                    break
-                }
+            for (index, favouriteContact) in favouriteContacts.enumerated() where favouriteContact.phoneNumber == contact.phoneNumber {
+                favouriteContacts.remove(at: index)
             }
         }
-
-        if let encoded = try? PropertyListEncoder().encode(favouriteContacts) {
-            let defaults = UserDefaults.standard
-            defaults.set(encoded, forKey: "favouriteContacts")
-        }
         phoneContacts[indexPathTapped.row].isFavourite = isFavourite
-        Storage.store(phoneContacts, to: .documents, as: "messages.json")
+        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
+        Storage.store(favouriteContacts, to: .documents, as: "favouriteContacts.json")
     }
 
-    var phoneContacts = [PhoneContact]() {
-        didSet {
-           if !phoneContacts.isEmpty {
-               tableView.isHidden = false
-           } else {
-               tableView.isHidden = true
-               loadContactsButton.isHidden = false
-           }
-        }
-    }
-    var filter: ContactsFilter = .none
-
-    private func loadContacts1(filter: ContactsFilter) {
+    private func loadContactsFromPhone(filter: ContactsFilter) {
         phoneContacts.removeAll()
         var allContacts = [PhoneContact]()
         for contact in PhoneContacts().getContacts(filter: filter) {
@@ -122,11 +116,14 @@ final class ContactsViewController: UIViewController {
         }
         phoneContacts.append(contentsOf: allContacts)
 
-        for contact in phoneContacts {
-            print("Name -> \(contact.name)")
-            print("Email -> \(contact.email)")
-            print("Phone Number -> \(contact.phoneNumber)")
+        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self)
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -140,6 +137,7 @@ extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             phoneContacts.remove(at: indexPath.row)
+            Storage.store(phoneContacts, to: .documents, as: "contacts.json")
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -157,16 +155,17 @@ extension ContactsViewController: UITableViewDataSource {
         cell.link = self
         cell.backgroundColor = UIColor(named: "BackgroundColor")
         cell.selectionStyle = .none
+        cell.heartButton.isSelected = phoneContacts[indexPath.row].isFavourite
         if phoneContacts[indexPath.row].imageDataAvailable {
             guard let data = phoneContacts[indexPath.row].avatarData else {
                 fatalError("Error")
             }
-            cell.cellImageView.image = UIImage(data: data)
+            cell.cellProfileImageView.image = UIImage(data: data)
         } else {
-            cell.cellImageView.image = UIImage(systemName: "person.circle.fill")
+            cell.cellProfileImageView.image = UIImage(systemName: "person.circle.fill")
         }
-        cell.cellTitle.text = phoneContacts[indexPath.row].name
-        cell.cellDescription.text = phoneContacts[indexPath.row].phoneNumber.first
+        cell.cellName.text = phoneContacts[indexPath.row].name
+        cell.cellPhoneNumber.text = phoneContacts[indexPath.row].phoneNumber.first
         return cell
     }
 }

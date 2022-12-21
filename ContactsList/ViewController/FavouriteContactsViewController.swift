@@ -41,14 +41,24 @@ final class FavouriteContactsViewController: UIViewController {
     }
 
     func deleteFromFavourite(cell: UITableViewCell) {
-        guard let indexPathTapped = tableView.indexPath(for: cell)?.row else {
+        guard let indexPathTapped = tableView.indexPath(for: cell) else {
             return
         }
-        favouriteContacts.remove(at: indexPathTapped)
-        tableView.reloadData()
+        var phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self)
+        let contact = favouriteContacts[indexPathTapped.row]
+        let isFavourite = contact.isFavourite
+        for (index, favouriteContact) in phoneContacts.enumerated() where favouriteContact.phoneNumber == contact.phoneNumber  {
+            phoneContacts[index].isFavourite = isFavourite
+        }
+        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
+        favouriteContacts.remove(at: indexPathTapped.row)
+        Storage.store(favouriteContacts, to: .documents, as: "favouriteContacts.json")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
-    lazy var favouriteContacts = getContacts()
+    lazy var favouriteContacts = Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self)
 
     func getContacts() -> [PhoneContact] {
         var favouriteContactsFromStorage = [PhoneContact]()
@@ -61,8 +71,10 @@ final class FavouriteContactsViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        favouriteContacts = getContacts()
-        tableView.reloadData()
+        favouriteContacts = Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 
@@ -94,12 +106,12 @@ extension FavouriteContactsViewController: UITableViewDataSource {
             guard let data = favouriteContacts[indexPath.row].avatarData else {
                 fatalError("Error")
             }
-            cell.cellImageView.image = UIImage(data: data)
+            cell.cellProfileImageView.image = UIImage(data: data)
         } else {
-            cell.cellImageView.image = UIImage(systemName: "person.circle.fill")
+            cell.cellProfileImageView.image = UIImage(systemName: "person.circle.fill")
         }
-        cell.cellTitle.text = favouriteContacts[indexPath.row].name
-        cell.cellDescription.text = favouriteContacts[indexPath.row].phoneNumber.first
+        cell.cellName.text = favouriteContacts[indexPath.row].name
+        cell.cellPhoneNumber.text = favouriteContacts[indexPath.row].phoneNumber.first
         return cell
     }
 }

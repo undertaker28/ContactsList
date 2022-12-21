@@ -8,7 +8,7 @@
 import UIKit
 
 class GeneralTableCell: UITableViewCell {
-    lazy var cellImageView: UIImageView = {
+    lazy var cellProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -16,7 +16,7 @@ class GeneralTableCell: UITableViewCell {
         return imageView
     }()
 
-    lazy var cellTitle: UILabel = {
+    lazy var cellName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "MarkPro-Bold", size: 18)
@@ -25,7 +25,7 @@ class GeneralTableCell: UITableViewCell {
         return label
     }()
 
-    lazy var cellDescription: UILabel = {
+    lazy var cellPhoneNumber: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "WorkSans-Regular", size: 16)
@@ -43,7 +43,7 @@ class GeneralTableCell: UITableViewCell {
     }()
 
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [cellTitle, cellDescription])
+        let stackView = UIStackView(arrangedSubviews: [cellName, cellPhoneNumber])
         stackView.axis = .vertical
         stackView.spacing = 4
         stackView.distribution = .equalCentering
@@ -62,12 +62,12 @@ class GeneralTableCell: UITableViewCell {
     }
 
     private func addSubviews() {
-        self.addSubview(cellImageView)
+        self.addSubview(cellProfileImageView)
         self.addSubview(stackView)
     }
 
     private func makeConstraints() {
-        cellImageView.snp.makeConstraints {
+        cellProfileImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(48)
             $0.leading.equalTo(contentView).offset(20)
@@ -78,7 +78,7 @@ class GeneralTableCell: UITableViewCell {
             $0.leftMargin.equalToSuperview().offset(10)
             $0.rightMargin.equalToSuperview().offset(-10)
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(cellImageView.snp.trailing).offset(10)
+            $0.leading.equalTo(cellProfileImageView.snp.trailing).offset(10)
             $0.trailing.equalTo(self.snp.trailing).offset(-10)
         }
     }
