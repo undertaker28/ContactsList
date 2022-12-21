@@ -25,6 +25,8 @@
 		E9DA8078295256D4005AABF6 /* FavouriteContactsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA8077295256D4005AABF6 /* FavouriteContactsTableCell.swift */; };
 		E9DA807A295256E9005AABF6 /* GeneralTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA8079295256E9005AABF6 /* GeneralTableCell.swift */; };
 		E9DA807C295277FC005AABF6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA807B295277FC005AABF6 /* Storage.swift */; };
+		E9E4748C2953BC32003EF7D6 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4748B2953BC32003EF7D6 /* ContactDetailViewController.swift */; };
+		E9E4748E2953D049003EF7D6 /* UITextField+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4748D2953D049003EF7D6 /* UITextField+Ex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		E9DA8077295256D4005AABF6 /* FavouriteContactsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteContactsTableCell.swift; sourceTree = "<group>"; };
 		E9DA8079295256E9005AABF6 /* GeneralTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralTableCell.swift; sourceTree = "<group>"; };
 		E9DA807B295277FC005AABF6 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		E9E4748B2953BC32003EF7D6 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactDetailViewController.swift; path = ContactsList/ViewController/ContactDetailViewController.swift; sourceTree = SOURCE_ROOT; };
+		E9E4748D2953D049003EF7D6 /* UITextField+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Ex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 			children = (
 				E99B4F042950F4E000DB74B8 /* UITabBarController+Ex.swift */,
 				E99B4F062950FEAE00DB74B8 /* UIButton+Ex.swift */,
+				E9E4748D2953D049003EF7D6 /* UITextField+Ex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -137,10 +142,10 @@
 		E9B11F62295073280002CFA6 /* ContactsList */ = {
 			isa = PBXGroup;
 			children = (
-				E99B4F0B29510DE300DB74B8 /* Services */,
-				E99B4F0829510B9900DB74B8 /* Model */,
 				E9B11F7829507D8A0002CFA6 /* Applications */,
 				E9B11F7929507D990002CFA6 /* ViewController */,
+				E99B4F0829510B9900DB74B8 /* Model */,
+				E99B4F0B29510DE300DB74B8 /* Services */,
 				E99B4F032950F4A900DB74B8 /* Extensions */,
 				E9A4DC882950DBDE00725A63 /* Fonts */,
 				E9B11F7729507D7F0002CFA6 /* SupportingFiles */,
@@ -172,6 +177,7 @@
 				E9DA80702951D75A005AABF6 /* Cell */,
 				E9A4DC822950C90100725A63 /* TabBarViewController.swift */,
 				E9B11F67295073280002CFA6 /* ContactsViewController.swift */,
+				E9E4748B2953BC32003EF7D6 /* ContactDetailViewController.swift */,
 				E9A4DC862950D71A00725A63 /* FavouriteContactsViewController.swift */,
 			);
 			path = ViewController;
@@ -336,10 +342,12 @@
 				E99B4F052950F4E000DB74B8 /* UITabBarController+Ex.swift in Sources */,
 				E9B11F68295073280002CFA6 /* ContactsViewController.swift in Sources */,
 				E9DA8078295256D4005AABF6 /* FavouriteContactsTableCell.swift in Sources */,
+				E9E4748E2953D049003EF7D6 /* UITextField+Ex.swift in Sources */,
 				E9A4DC832950C90100725A63 /* TabBarViewController.swift in Sources */,
 				E9DA807C295277FC005AABF6 /* Storage.swift in Sources */,
 				E9B11F64295073280002CFA6 /* AppDelegate.swift in Sources */,
 				E9DA80722951D763005AABF6 /* ContactsTableCell.swift in Sources */,
+				E9E4748C2953BC32003EF7D6 /* ContactDetailViewController.swift in Sources */,
 				E99B4F072950FEAE00DB74B8 /* UIButton+Ex.swift in Sources */,
 				E9A4DC872950D71A00725A63 /* FavouriteContactsViewController.swift in Sources */,
 				E99B4F0A29510BAD00DB74B8 /* PhoneContactModel.swift in Sources */,

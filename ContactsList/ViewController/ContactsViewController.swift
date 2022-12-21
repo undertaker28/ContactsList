@@ -50,7 +50,6 @@ final class ContactsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = 68
         tableView.backgroundColor = UIColor(named: "BackgroundColor")
-        tableView.separatorColor = UIColor(named: "ElementsInCellColor")
         tableView.tableHeaderView = UIView()
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         tableView.addGestureRecognizer(longPress)
@@ -189,9 +188,7 @@ final class ContactsViewController: UIViewController {
         let phoneNumberToShare = [phoneContacts[index].phoneNumber.first]
         let activityViewController = UIActivityViewController(activityItems: phoneNumberToShare as [Any], applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
-
         activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
-
         self.present(activityViewController, animated: true, completion: nil)
     }
 
@@ -223,7 +220,21 @@ final class ContactsViewController: UIViewController {
 
 extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        let detailsViewController = ContactDetailViewController()
+        if phoneContacts[indexPath.row].imageDataAvailable {
+            guard let data = phoneContacts[indexPath.row].avatarData, let contactImage = UIImage(data: data) else {
+                fatalError("Couldn't get avatarData")
+            }
+            detailsViewController.contactImage = contactImage
+        } else {
+            guard let contactImage = UIImage(systemName: "person.circle.fill") else {
+                fatalError("Couldn't get system image")
+            }
+            detailsViewController.contactImage = contactImage
+        }
+        detailsViewController.name = phoneContacts[indexPath.row].name ?? ""
+        detailsViewController.phoneNumber = phoneContacts[indexPath.row].phoneNumber.first ?? ""
+        navigationController?.pushViewController(detailsViewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
