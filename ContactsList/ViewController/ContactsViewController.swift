@@ -51,6 +51,8 @@ final class ContactsViewController: UIViewController {
         tableView.backgroundColor = UIColor(named: "BackgroundColor")
         tableView.separatorColor = UIColor(named: "ElementsInCellColor")
         tableView.tableHeaderView = UIView()
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        tableView.addGestureRecognizer(longPress)
         return tableView
     }()
 
@@ -87,6 +89,64 @@ final class ContactsViewController: UIViewController {
         loadContactsFromPhone(filter: filter)
         loadContactsButton.isHidden = true
         tableView.isHidden = false
+    }
+
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                let alert = UIAlertController(title: phoneContacts[indexPath.row].name, message: "Please select an option", preferredStyle: .alert)
+
+                let copyActionButton = UIAlertAction(title: "Copy", style: .default) { [self] _ in
+                    copyPhoneNumber(index: indexPath.row)
+                }
+                alert.addAction(copyActionButton)
+                copyActionButton.setValue(UIImage(systemName: "doc.on.doc"), forKey: "image")
+                copyActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+                let shareActionButton = UIAlertAction(title: "Share", style: .default) { [self]_ in
+                    shareWithPhoneNumber(index: indexPath.row)
+                }
+                alert.addAction(shareActionButton)
+                shareActionButton.setValue(UIImage(systemName: "square.and.arrow.up"), forKey: "image")
+                shareActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+                let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                alert.addAction(cancelActionButton)
+                cancelActionButton.setValue(UIImage(systemName: "arrowshape.turn.up.backward"), forKey: "image")
+                cancelActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+                let deleteActionButton = UIAlertAction(title: "Delete", style: .destructive) { [self]_ in
+                    removeContact(indexPath: indexPath)
+                }
+                alert.addAction(deleteActionButton)
+                deleteActionButton.setValue(UIImage(systemName: "trash"), forKey: "image")
+                deleteActionButton.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+                alert.view.tintColor = UIColor(named: "TextColor")
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+
+    private func copyPhoneNumber(index: Int) {
+        UIPasteboard.general.string = phoneContacts[index].phoneNumber.first
+    }
+
+    private func shareWithPhoneNumber(index: Int) {
+        let phoneNumberToShare = [phoneContacts[index].phoneNumber.first]
+        let activityViewController = UIActivityViewController(activityItems: phoneNumberToShare as [Any], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+
+        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+
+    private func removeContact(indexPath: IndexPath) {
+        phoneContacts.remove(at: indexPath.row)
+        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
     func addToFavourite(cell: UITableViewCell) {
@@ -132,13 +192,12 @@ final class ContactsViewController: UIViewController {
 
 extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            phoneContacts.remove(at: indexPath.row)
-            Storage.store(phoneContacts, to: .documents, as: "contacts.json")
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            removeContact(indexPath: indexPath)
         }
     }
 }
@@ -154,7 +213,6 @@ extension ContactsViewController: UITableViewDataSource {
         }
         cell.link = self
         cell.backgroundColor = UIColor(named: "BackgroundColor")
-        cell.selectionStyle = .none
         cell.heartButton.isSelected = phoneContacts[indexPath.row].isFavourite
         if phoneContacts[indexPath.row].imageDataAvailable {
             guard let data = phoneContacts[indexPath.row].avatarData else {

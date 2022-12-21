@@ -20,7 +20,7 @@ class GeneralTableCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "MarkPro-Bold", size: 18)
-        //label.textColor = UIColor(named: "TitleColor")
+        label.textColor = UIColor(named: "TextColor")
         label.numberOfLines = 0
         return label
     }()
@@ -29,7 +29,7 @@ class GeneralTableCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "WorkSans-Regular", size: 16)
-        //label.textColor = UIColor(named: "DescriptionColor")
+        label.textColor = UIColor(named: "PhoneNumberColor")
         label.numberOfLines = 0
         return label
     }()
