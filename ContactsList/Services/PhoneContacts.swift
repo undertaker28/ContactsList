@@ -7,19 +7,13 @@
 
 import ContactsUI
 
-enum ContactsFilter {
-    case none
-    case mail
-    case message
-}
-
 enum GetContactsError: Error {
     case errorFetchingContainers
     case errorInGettingKeyDescriptor
 }
 
 final class PhoneContacts {
-    func getContacts(filter: ContactsFilter = .none) throws -> [CNContact] {
+    func getContacts() throws -> [CNContact] {
         let contactStore = CNContactStore()
         let keysToFetch = [
             CNContactFormatter.descriptorForRequiredKeys(for: .fullName),

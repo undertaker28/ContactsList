@@ -21,7 +21,6 @@ final class ContactsViewController: UIViewController {
     }
 
     private var favouriteContacts = [PhoneContact]()
-    private var filter: ContactsFilter = .none
 
     private lazy var loadContactsButton: UIButton = {
         let button = UIButton()
@@ -96,15 +95,15 @@ final class ContactsViewController: UIViewController {
     }
 
     @objc private func loadContacts() {
-        loadContactsFromPhone(filter: filter)
+        loadContactsFromPhone()
         tableView.isHidden = false
     }
 
-    private func loadContactsFromPhone(filter: ContactsFilter) {
+    private func loadContactsFromPhone() {
         phoneContacts.removeAll()
         var allContacts = [PhoneContact]()
         do {
-            let gettingContacts = try PhoneContacts().getContacts(filter: filter)
+            let gettingContacts = try PhoneContacts().getContacts()
             for contact in gettingContacts {
                 allContacts.append(PhoneContact(contact: contact))
             }

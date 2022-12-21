@@ -81,6 +81,21 @@ final class FavouriteContactsViewController: UIViewController {
 
 extension FavouriteContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailsViewController = ContactDetailViewController()
+        if favouriteContacts[indexPath.row].imageDataAvailable {
+            guard let data = favouriteContacts[indexPath.row].avatarData, let contactImage = UIImage(data: data) else {
+                fatalError("Couldn't get avatarData")
+            }
+            detailsViewController.contactImage = contactImage
+        } else {
+            guard let contactImage = UIImage(systemName: "person.circle.fill") else {
+                fatalError("Couldn't get system image")
+            }
+            detailsViewController.contactImage = contactImage
+        }
+        detailsViewController.name = favouriteContacts[indexPath.row].name ?? ""
+        detailsViewController.phoneNumber = favouriteContacts[indexPath.row].phoneNumber.first ?? ""
+        navigationController?.pushViewController(detailsViewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -101,7 +116,6 @@ extension FavouriteContactsViewController: UITableViewDataSource {
         }
         cell.link = self
         cell.backgroundColor = UIColor(named: "BackgroundColor")
-        cell.selectionStyle = .none
         cell.heartButton.isSelected = true
         if favouriteContacts[indexPath.row].imageDataAvailable {
             guard let data = favouriteContacts[indexPath.row].avatarData else {
