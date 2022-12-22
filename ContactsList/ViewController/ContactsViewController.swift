@@ -220,6 +220,7 @@ final class ContactsViewController: UIViewController {
 extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailsViewController = ContactDetailViewController()
+        detailsViewController.indexInAllContacts = indexPath.row
         if phoneContacts[indexPath.row].imageDataAvailable {
             guard let data = phoneContacts[indexPath.row].avatarData, let contactImage = UIImage(data: data) else {
                 fatalError("Couldn't get avatarData")

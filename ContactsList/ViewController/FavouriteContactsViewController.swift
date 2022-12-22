@@ -82,6 +82,7 @@ final class FavouriteContactsViewController: UIViewController {
 extension FavouriteContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailsViewController = ContactDetailViewController()
+        detailsViewController.indexInFavouriteContacts = indexPath.row
         if favouriteContacts[indexPath.row].imageDataAvailable {
             guard let data = favouriteContacts[indexPath.row].avatarData, let contactImage = UIImage(data: data) else {
                 fatalError("Couldn't get avatarData")

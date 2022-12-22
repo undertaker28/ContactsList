@@ -11,6 +11,8 @@ final class ContactDetailViewController: UIViewController {
     lazy var contactImage = UIImage()
     lazy var name = ""
     lazy var phoneNumber = ""
+    lazy var indexInAllContacts = 0
+    lazy var indexInFavouriteContacts = 0
 
     private lazy var contactImageView: UIImageView = {
         let imageView = UIImageView()
@@ -90,9 +92,20 @@ final class ContactDetailViewController: UIViewController {
             textFieldName.isEnabled = true
             textFieldPhoneNumber.isEnabled = true
         } else {
+            if textFieldName.isEditing || textFieldPhoneNumber.isEditing {
+                saveChanges(contactsForChanges: "favouriteContacts", index: indexInFavouriteContacts)
+                saveChanges(contactsForChanges: "contacts", index: indexInAllContacts)
+            }
             textFieldName.isEnabled = false
             textFieldPhoneNumber.isEnabled = false
         }
+    }
+
+    private func saveChanges(contactsForChanges: String, index: Int) {
+        var contacts = Storage.retrieve("\(contactsForChanges).json", from: .documents, as: [PhoneContact].self)
+        contacts[index].name = textFieldName.text
+        contacts[index].phoneNumber[0] = textFieldPhoneNumber.text ?? contacts[index].phoneNumber[0]
+        Storage.store(contacts, to: .documents, as: "\(contactsForChanges).json")
     }
 
     private func setupStackView() {
