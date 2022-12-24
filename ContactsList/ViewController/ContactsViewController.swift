@@ -203,24 +203,15 @@ final class ContactsViewController: UIViewController {
         }
         let contact = phoneContacts[indexPathTapped.row]
         let isFavourite = !contact.isFavourite
-        var favouriteContacts = Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self)
-        if isFavourite {
-            favouriteContacts.append(contact)
-        } else {
-            for (index, favouriteContact) in favouriteContacts.enumerated() where favouriteContact.phoneNumber == contact.phoneNumber {
-                favouriteContacts.remove(at: index)
-            }
-        }
         phoneContacts[indexPathTapped.row].isFavourite = isFavourite
         Storage.store(phoneContacts, to: .documents, as: "contacts.json")
-        Storage.store(favouriteContacts, to: .documents, as: "favouriteContacts.json")
     }
 }
 
 extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailsViewController = ContactDetailViewController()
-        detailsViewController.indexInAllContacts = indexPath.row
+        detailsViewController.index = indexPath.row
         if phoneContacts[indexPath.row].imageDataAvailable {
             guard let data = phoneContacts[indexPath.row].avatarData, let contactImage = UIImage(data: data) else {
                 fatalError("Couldn't get avatarData")

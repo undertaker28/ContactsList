@@ -8,6 +8,8 @@
 import UIKit
 
 final class FavouriteContactsViewController: UIViewController {
+    private lazy var favouriteContacts = Storage.fileExists("contacts.json", in: .documents) ? Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self).filter { $0.isFavourite } : [PhoneContact]()
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
@@ -25,13 +27,12 @@ final class FavouriteContactsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "BackgroundColor")
         view.addSubview(tableView)
-        Storage.store(favouriteContacts, to: .documents, as: "favouriteContacts.json")
         setupNavigationBar()
         makeConstraints()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        favouriteContacts = Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self)
+        favouriteContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self).filter { $0.isFavourite }
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -54,35 +55,22 @@ final class FavouriteContactsViewController: UIViewController {
         }
         var phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self)
         let contact = favouriteContacts[indexPathTapped.row]
-        let isFavourite = contact.isFavourite
+        let isFavourite = !contact.isFavourite
         for (index, favouriteContact) in phoneContacts.enumerated() where favouriteContact.phoneNumber == contact.phoneNumber {
             phoneContacts[index].isFavourite = isFavourite
         }
-        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
         favouriteContacts.remove(at: indexPathTapped.row)
-        Storage.store(favouriteContacts, to: .documents, as: "favouriteContacts.json")
+        Storage.store(phoneContacts, to: .documents, as: "contacts.json")
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-    }
-
-    private lazy var favouriteContacts = Storage.fileExists("favouriteContacts.json", in: .documents) ? Storage.retrieve("favouriteContacts.json", from: .documents, as: [PhoneContact].self) : [PhoneContact]()
-
-    private func getContacts() -> [PhoneContact] {
-        var favouriteContactsFromStorage = [PhoneContact]()
-        if let data = UserDefaults.standard.object(forKey: "favouriteContacts") as? Data {
-            if let favouriteContacts = try? PropertyListDecoder().decode([PhoneContact].self, from: data) {
-                favouriteContactsFromStorage = favouriteContacts
-            }
-        }
-        return favouriteContactsFromStorage
     }
 }
 
 extension FavouriteContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailsViewController = ContactDetailViewController()
-        detailsViewController.indexInFavouriteContacts = indexPath.row
+        detailsViewController.index = indexPath.row
         if favouriteContacts[indexPath.row].imageDataAvailable {
             guard let data = favouriteContacts[indexPath.row].avatarData, let contactImage = UIImage(data: data) else {
                 fatalError("Couldn't get avatarData")
