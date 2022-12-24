@@ -27,10 +27,10 @@ final class TabBarViewController: UITabBarController {
         let contactsViewController = UINavigationController(rootViewController: ContactsViewController())
         let favouriteContactsViewController = UINavigationController(rootViewController: FavouriteContactsViewController())
 
-        contactsViewController.tabBarItem = UITabBarItem(title: "Contacts", image: UIImage(systemName: "person.2.circle"), tag: 1)
+        contactsViewController.tabBarItem = UITabBarItem(title: "Contacts".localized(), image: UIImage(systemName: "person.2.circle"), tag: 1)
         contactsViewController.tabBarItem.selectedImage = UIImage(systemName: "person.2.circle.fill")
 
-        favouriteContactsViewController.tabBarItem = UITabBarItem(title: "Favourite", image: UIImage(systemName: "heart"), tag: 2)
+        favouriteContactsViewController.tabBarItem = UITabBarItem(title: "Favourite".localized(), image: UIImage(systemName: "heart"), tag: 2)
         favouriteContactsViewController.tabBarItem.selectedImage = UIImage(systemName: "heart.fill")
 
         setViewControllers([contactsViewController, favouriteContactsViewController], animated: false)

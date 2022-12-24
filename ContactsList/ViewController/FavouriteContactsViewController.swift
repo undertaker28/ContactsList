@@ -8,7 +8,7 @@
 import UIKit
 
 final class FavouriteContactsViewController: UIViewController {
-    private lazy var favouriteContacts = Storage.fileExists("contacts.json", in: .documents) ? Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self).filter { $0.isFavourite } : [PhoneContact]()
+    private lazy var favouriteContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self).filter { $0.isFavourite }
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -46,7 +46,7 @@ final class FavouriteContactsViewController: UIViewController {
 
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = "Favourite"
+        title = "Favourite".localized()
     }
 
     func deleteFromFavourite(cell: UITableViewCell) {

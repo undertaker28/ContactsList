@@ -24,7 +24,7 @@ final class ContactsViewController: UIViewController {
 
     private lazy var loadContactsButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Загрузить контакты", for: .normal)
+        button.setTitle("Upload contacts".localized(), for: .normal)
         button.setTitleColor(UIColor(named: "TextColor"), for: .normal)
         button.backgroundColor = UIColor(named: "UIElementsColor")
         button.layer.cornerRadius = 34
@@ -91,7 +91,7 @@ final class ContactsViewController: UIViewController {
 
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = "Contacts"
+        title = "Contacts".localized()
     }
 
     @objc private func loadContacts() {

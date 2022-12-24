@@ -27,6 +27,8 @@
 		E9DA807C295277FC005AABF6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA807B295277FC005AABF6 /* Storage.swift */; };
 		E9E4748C2953BC32003EF7D6 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4748B2953BC32003EF7D6 /* ContactDetailViewController.swift */; };
 		E9E4748E2953D049003EF7D6 /* UITextField+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4748D2953D049003EF7D6 /* UITextField+Ex.swift */; };
+		E9FA680B29576FB200DC3E39 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E9FA680D29576FB200DC3E39 /* Localizable.strings */; };
+		E9FA6811295771B600DC3E39 /* String+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA6810295771B600DC3E39 /* String+Ex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,9 @@
 		E9DA807B295277FC005AABF6 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		E9E4748B2953BC32003EF7D6 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactDetailViewController.swift; path = ContactsList/ViewController/ContactDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		E9E4748D2953D049003EF7D6 /* UITextField+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Ex.swift"; sourceTree = "<group>"; };
+		E9FA680C29576FB200DC3E39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E9FA680E29576FE800DC3E39 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E9FA6810295771B600DC3E39 /* String+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,14 +90,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E99B4F032950F4A900DB74B8 /* Extensions */ = {
+		E99B4F032950F4A900DB74B8 /* UIExtensions */ = {
 			isa = PBXGroup;
 			children = (
 				E99B4F042950F4E000DB74B8 /* UITabBarController+Ex.swift */,
 				E99B4F062950FEAE00DB74B8 /* UIButton+Ex.swift */,
 				E9E4748D2953D049003EF7D6 /* UITextField+Ex.swift */,
 			);
-			path = Extensions;
+			path = UIExtensions;
 			sourceTree = "<group>";
 		};
 		E99B4F0829510B9900DB74B8 /* Model */ = {
@@ -146,7 +151,8 @@
 				E9B11F7929507D990002CFA6 /* ViewController */,
 				E99B4F0829510B9900DB74B8 /* Model */,
 				E99B4F0B29510DE300DB74B8 /* Services */,
-				E99B4F032950F4A900DB74B8 /* Extensions */,
+				E9FA680F2957719200DC3E39 /* Extensions */,
+				E99B4F032950F4A900DB74B8 /* UIExtensions */,
 				E9A4DC882950DBDE00725A63 /* Fonts */,
 				E9B11F7729507D7F0002CFA6 /* SupportingFiles */,
 			);
@@ -156,6 +162,7 @@
 		E9B11F7729507D7F0002CFA6 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				E9FA680829576F1600DC3E39 /* Localizable */,
 				E9B11F7A29507DA70002CFA6 /* Assets */,
 				E9B11F6E295073290002CFA6 /* LaunchScreen.storyboard */,
 				E9B11F71295073290002CFA6 /* Info.plist */,
@@ -200,6 +207,22 @@
 				E9DA8077295256D4005AABF6 /* FavouriteContactsTableCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		E9FA680829576F1600DC3E39 /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+				E9FA680D29576FB200DC3E39 /* Localizable.strings */,
+			);
+			path = Localizable;
+			sourceTree = "<group>";
+		};
+		E9FA680F2957719200DC3E39 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E9FA6810295771B600DC3E39 /* String+Ex.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +270,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = E9B11F57295073280002CFA6;
 			productRefGroup = E9B11F61295073280002CFA6 /* Products */;
@@ -264,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9A4DC852950D2F800725A63 /* Colors.xcassets in Resources */,
+				E9FA680B29576FB200DC3E39 /* Localizable.strings in Resources */,
 				E9B11F70295073290002CFA6 /* LaunchScreen.storyboard in Resources */,
 				E9A4DC8A2950DBE900725A63 /* WorkSans-Regular.otf in Resources */,
 				E9B11F6D295073290002CFA6 /* Assets.xcassets in Resources */,
@@ -344,6 +369,7 @@
 				E9DA8078295256D4005AABF6 /* FavouriteContactsTableCell.swift in Sources */,
 				E9E4748E2953D049003EF7D6 /* UITextField+Ex.swift in Sources */,
 				E9A4DC832950C90100725A63 /* TabBarViewController.swift in Sources */,
+				E9FA6811295771B600DC3E39 /* String+Ex.swift in Sources */,
 				E9DA807C295277FC005AABF6 /* Storage.swift in Sources */,
 				E9B11F64295073280002CFA6 /* AppDelegate.swift in Sources */,
 				E9DA80722951D763005AABF6 /* ContactsTableCell.swift in Sources */,
@@ -366,6 +392,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		E9FA680D29576FB200DC3E39 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E9FA680C29576FB200DC3E39 /* en */,
+				E9FA680E29576FE800DC3E39 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -373,6 +408,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -433,6 +469,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
