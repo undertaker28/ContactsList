@@ -111,11 +111,22 @@ final class ContactsViewController: UIViewController {
         } catch {
             settingsAlert()
         }
-        phoneContacts.append(contentsOf: allContacts)
+        let allContactsWithFormattedPhoneNumbers = formattedPhoneNumbers(allContacts: allContacts)
+        phoneContacts.append(contentsOf: allContactsWithFormattedPhoneNumbers)
 
         Storage.store(phoneContacts, to: .documents, as: "contacts.json")
         DispatchQueue.main.async {
             self.tableView.reloadData()
+        }
+    }
+
+    private func formattedPhoneNumbers(allContacts: [PhoneContact]) -> [PhoneContact] {
+        allContacts.compactMap { phoneContact in
+            var phoneContact = phoneContact
+            let stringWithoutBrackets = phoneContact.phoneNumber.replacingOccurrences(of: "[()]", with: "", options: .regularExpression, range: nil)
+            let stringWithoutDash = stringWithoutBrackets.replacingOccurrences(of: "-", with: " ", options: .literal, range: nil)
+            phoneContact.phoneNumber = stringWithoutDash
+            return phoneContact
         }
     }
 
@@ -180,7 +191,7 @@ final class ContactsViewController: UIViewController {
     }
 
     private func copyPhoneNumber(index: Int) {
-        UIPasteboard.general.string = phoneContacts[index].phoneNumber.first
+        UIPasteboard.general.string = phoneContacts[index].phoneNumber
     }
 
     private func shareWithPhoneNumber(index: Int) {
@@ -224,7 +235,7 @@ extension ContactsViewController: UITableViewDelegate {
             detailsViewController.contactImage = contactImage
         }
         detailsViewController.name = phoneContacts[indexPath.row].name ?? ""
-        detailsViewController.phoneNumber = phoneContacts[indexPath.row].phoneNumber.first ?? ""
+        detailsViewController.phoneNumber = phoneContacts[indexPath.row].phoneNumber
         navigationController?.pushViewController(detailsViewController, animated: true)
     }
 
@@ -256,7 +267,7 @@ extension ContactsViewController: UITableViewDataSource {
             cell.cellProfileImageView.image = UIImage(systemName: "person.circle.fill")
         }
         cell.cellName.text = phoneContacts[indexPath.row].name
-        cell.cellPhoneNumber.text = phoneContacts[indexPath.row].phoneNumber.first
+        cell.cellPhoneNumber.text = phoneContacts[indexPath.row].phoneNumber
         return cell
     }
 }

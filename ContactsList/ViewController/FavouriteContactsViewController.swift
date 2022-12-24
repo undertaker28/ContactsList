@@ -83,7 +83,7 @@ extension FavouriteContactsViewController: UITableViewDelegate {
             detailsViewController.contactImage = contactImage
         }
         detailsViewController.name = favouriteContacts[indexPath.row].name ?? ""
-        detailsViewController.phoneNumber = favouriteContacts[indexPath.row].phoneNumber.first ?? ""
+        detailsViewController.phoneNumber = favouriteContacts[indexPath.row].phoneNumber
         navigationController?.pushViewController(detailsViewController, animated: true)
     }
 
@@ -115,7 +115,7 @@ extension FavouriteContactsViewController: UITableViewDataSource {
             cell.cellProfileImageView.image = UIImage(systemName: "person.circle.fill")
         }
         cell.cellName.text = favouriteContacts[indexPath.row].name
-        cell.cellPhoneNumber.text = favouriteContacts[indexPath.row].phoneNumber.first
+        cell.cellPhoneNumber.text = favouriteContacts[indexPath.row].phoneNumber
         return cell
     }
 }

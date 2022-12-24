@@ -17,6 +17,7 @@ final class ContactDetailViewController: UIViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 52
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -94,7 +95,7 @@ final class ContactDetailViewController: UIViewController {
             if textFieldName.isEditing || textFieldPhoneNumber.isEditing {
                 var contacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self)
                 contacts[index].name = textFieldName.text
-                contacts[index].phoneNumber[0] = textFieldPhoneNumber.text ?? contacts[index].phoneNumber[0]
+                contacts[index].phoneNumber = textFieldPhoneNumber.text ?? contacts[index].phoneNumber
                 Storage.store(contacts, to: .documents, as: "contacts.json")
             }
             textFieldName.isEnabled = false
