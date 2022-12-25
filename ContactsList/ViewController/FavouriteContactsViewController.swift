@@ -49,17 +49,21 @@ final class FavouriteContactsViewController: UIViewController {
         title = "Favourite".localized()
     }
 
-    func deleteFromFavourite(cell: UITableViewCell) {
+    func markAsNotFavorite(cell: UITableViewCell) {
         guard let indexPathTapped = tableView.indexPath(for: cell) else {
             return
         }
+        deleteFromListOfFavourite(index: indexPathTapped)
+    }
+
+    func deleteFromListOfFavourite(index: IndexPath) {
         var phoneContacts = Storage.retrieve("contacts.json", from: .documents, as: [PhoneContact].self)
-        let contact = favouriteContacts[indexPathTapped.row]
+        let contact = favouriteContacts[index.row]
         let isFavourite = !contact.isFavourite
         for (index, favouriteContact) in phoneContacts.enumerated() where favouriteContact.phoneNumber == contact.phoneNumber {
             phoneContacts[index].isFavourite = isFavourite
         }
-        favouriteContacts.remove(at: indexPathTapped.row)
+        favouriteContacts.remove(at: index.row)
         Storage.store(phoneContacts, to: .documents, as: "contacts.json")
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -89,6 +93,7 @@ extension FavouriteContactsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            deleteFromListOfFavourite(index: indexPath)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

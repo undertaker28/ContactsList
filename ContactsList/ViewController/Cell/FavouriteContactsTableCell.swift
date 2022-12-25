@@ -17,7 +17,7 @@ final class FavouriteContactsTableCell: GeneralTableCell {
 
     @objc private func deleteFromFavourite(_ sender: UIButton) {
         sender.isSelected = sender.isSelected == true ? false : true
-        link?.deleteFromFavourite(cell: self)
+        link?.markAsNotFavorite(cell: self)
     }
 
     required init?(coder: NSCoder) {
