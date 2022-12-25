@@ -84,6 +84,22 @@ final class ContactDetailViewController: UIViewController {
         addSubviews()
         makeConstraints()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editMode))
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height / 2
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
 
     @objc private func editMode() {
@@ -116,7 +132,7 @@ final class ContactDetailViewController: UIViewController {
 
     private func makeConstraints() {
         contactImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(110)
+            $0.centerX.centerY.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(104)
         }
